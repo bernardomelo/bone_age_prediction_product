@@ -8,6 +8,7 @@ Este projeto tem como objetivo desenvolver uma solução baseada em inteligênci
 - Reduzir o tempo de diagnóstico e a sobrecarga dos radiologistas.
 - Melhorar a consistência e precisão das avaliações.
 - Garantir a aplicabilidade clínica da solução.
+- Criar interface interativa e integrar no fluxo de trabalho dos especialistas.
 
 ## 🧠 Tecnologias a serem utilizadas
 
