@@ -8,6 +8,9 @@ import numpy as np
 from PIL import Image
 import logging
 
+# Imports internos
+from utils.image_pre_processing import ImagePreprocessor
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -59,6 +62,25 @@ app.add_middleware(
 #         logger.error(f"Erro ao salvar imagem: {e}")
 #         return None, None
 
+def mock_predict_bone_age(processed_array) -> dict:
+    """
+    MOCK de predição - substituir pelo modelo real
+    """
+    # Simulando processamento do modelo
+    time.sleep(0.2)
+
+    # Mock simples: gerar idade aleatória
+    predicted_age = np.random.uniform(6.0, 18.0)
+    confidence = np.random.uniform(0.85, 0.98)
+
+    return {
+        "predicted_age_months": round(predicted_age * 12, 1),
+        "predicted_age_years": round(predicted_age, 1),
+        "confidence": round(confidence, 3),
+        "model_status": "MOCK - modelo real será carregado depois",
+        "array_shape": list(processed_array.shape)
+    }
+
 
 def validate_image_file(file: UploadFile) -> dict:
     """
@@ -91,6 +113,8 @@ async def predict(file: UploadFile = File(...)):
     """
     start_time = time.time()
 
+    preprocessor = ImagePreprocessor(target_size=(384, 384))
+
     try:
         validation = validate_image_file(file)
         if not validation["is_valid"]:
@@ -107,14 +131,18 @@ async def predict(file: UploadFile = File(...)):
         # if not saved_path:
         #     logger.warning("Falha ao salvar imagem, mas continuando processamento...")
 
+        try:
+            processed_array = preprocessor.preprocess_from_bytes(contents)
+            logger.info(f"Imagem pré-processada com sucesso - Shape: {processed_array.shape}")
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Erro no pré-processamento da imagem: {str(e)}"
+            )
+
         # Usando mock por enquanto
         # result = bone_age_model.predict(processed_array)
-        result = {"status":"success",
-                  "filename":"output_image7.png",
-                  "prediction":{"predicted_age_months":92.7,"predicted_age_years":7.7,"confidence":0.894,"model_status":"MOCK - modelo real será carregado depois","array_shape":[1,384,384,3],"processing_time_ms":282.56},
-                  "preprocessing_info":{"shape":[1,384,384,3], "dtype":"float32","min_value":-123.68000030517578,"max_value":127.06099700927734,"mean_value":-74.85670471191406},
-                  "timestamp":"2025-08-13T06:08:23.956459"}
-
+        result = mock_predict_bone_age(processed_array)
         logger.info(f"Mocked predicted bone age: {result}")
 
         processing_time = round((time.time() - start_time) * 1000, 2)
@@ -130,7 +158,7 @@ async def predict(file: UploadFile = File(...)):
             "timestamp": datetime.now().isoformat()
         }
 
-        logger.info(f"Predição concluída em {processing_time}ms")
+        logger.info(f"Predição mock concluída em {processing_time}ms")
         return response
 
     except HTTPException:
