@@ -8,13 +8,14 @@ Este projeto tem como objetivo desenvolver uma solução baseada em inteligênci
 - Reduzir o tempo de diagnóstico e a sobrecarga dos radiologistas.
 - Melhorar a consistência e precisão das avaliações.
 - Garantir a aplicabilidade clínica da solução.
-- Criar interface interativa e integrar no fluxo de trabalho dos especialistas.
+- Criar aplicação API restful para integração com sistemas existentes e utilização do modelo.
 
 ## 🧠 Tecnologias a serem utilizadas
 
 - Python 3.10
-- TensorFlow 2.12 / Keras
-- FastAPI (API para inferência)
+- TensorFlow 2.12 / Keras / numpy
+- Pillow
+- FastAPI
 - Docker 
 
 ## 🧩 Estrutura do Projeto
