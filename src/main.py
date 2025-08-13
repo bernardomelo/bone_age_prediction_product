@@ -10,6 +10,7 @@ import logging
 
 # Imports internos
 from utils.image_pre_processing import ImagePreprocessor
+#from utils.model_handler import BoneAgeModel
 
 
 logging.basicConfig(level=logging.INFO)
@@ -35,6 +36,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# try:
+#     # Inicializar Modelo
+#     bone_age_model = BoneAgeModel(model_path='attentionv3.h5')
+#     logger.info(f"- Model carregado com sucesso")
+# except Exception as e:
+#     raise HTTPException(
+#         status_code=400,
+#         detail=f"Erro no carregamento do modelo: {str(e)}"
+#     )
 
 # Para testes
 # def save_received_image(file_contents, original_filename):
@@ -140,10 +150,16 @@ async def predict(file: UploadFile = File(...)):
                 detail=f"Erro no pré-processamento da imagem: {str(e)}"
             )
 
-        # Usando mock por enquanto
-        # result = bone_age_model.predict(processed_array)
-        result = mock_predict_bone_age(processed_array)
-        logger.info(f"Mocked predicted bone age: {result}")
+        try:
+            # Usando mock por enquanto
+            # result = bone_age_model.predict(processed_array)
+            result = mock_predict_bone_age(processed_array)
+            logger.info(f"Mocked predicted bone age: {result}")
+        except Exception as e:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Erro na inferência do modelo: {str(e)}"
+            )
 
         processing_time = round((time.time() - start_time) * 1000, 2)
         logger.info(f"Tempo de processamento para {file.filename}: {processing_time}")
