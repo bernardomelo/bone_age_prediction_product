@@ -27,8 +27,6 @@ Este projeto tem como objetivo desenvolver uma solução baseada em inteligênci
 
 ┃ ┣ 📂api/ # Interface de API (FastAPI)
 
-┃ ┗ 📂web/ # Interface da Aplicação
-
 ┃ ┗ 📂utils/ # Funções auxiliares, pré-processamento etc.
 
 ┣ 📂notebooks/ # Jupyter notebooks para exploração e validação
