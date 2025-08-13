@@ -12,8 +12,8 @@ Este projeto tem como objetivo desenvolver uma solução baseada em inteligênci
 
 ## 🧠 Tecnologias a serem utilizadas
 
-- Python
-- TensorFlow / Keras
+- Python 3.10
+- TensorFlow 2.12 / Keras
 - FastAPI (API para inferência)
 - Docker 
 
@@ -41,6 +41,10 @@ Este projeto tem como objetivo desenvolver uma solução baseada em inteligênci
 
 ┣ 📂docs/ # Documentação adicional e artefatos AIDesign
 
+┣ 📄Dockerfile # Para conteinarização
+
+┣ 📄requirements.txt # Para controle de dependências
+
 ┣ 📄README.md # Este arquivo
 
 ┣ 📄CONTRIBUTING.md # Guia de contribuição
@@ -64,6 +68,7 @@ Siga as instruções do arquivo [BUILD.md](BUILD.md) para rodar o projeto localm
 ## 👥 Equipe
 
 - Bernardo Gomes de Melo — Líder de Projeto e IA  
+- Vlademir José - Líder de Negócios
 
 
 ---
